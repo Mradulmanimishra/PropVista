@@ -33,6 +33,7 @@ uv.lock
 node_modules/
 dist/
 .cache/
+package-lock.json
 
 # Vite
 frontend/dist/

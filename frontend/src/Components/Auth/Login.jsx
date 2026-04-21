@@ -91,7 +91,7 @@ const Login = () => {
             {authShow ? (
                 <div className="LoginMainDiv">
                     <div className="Loginleft">
-                        <div className="CompanyTitle">Banke Bihari Group</div>
+                        <div className="CompanyTitle">Professionalist</div>
                         <div className="logintitle">Login to Your Account</div>
 
                         {successMsg && <div className="AuthSuccess">{successMsg}</div>}

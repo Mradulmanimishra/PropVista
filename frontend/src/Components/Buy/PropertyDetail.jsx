@@ -143,7 +143,7 @@ const PropertyDetail = () => {
     return (
         <div className="PropertyDetail">
             <header className="DetailHeader">
-                <Link to="/" className="DetailLogo">Banke Bihari Group</Link>
+                <Link to="/" className="DetailLogo">Professionalist</Link>
                 <nav>
                     <Link to="/">Home</Link>
                     <Link to="/buy">← Listings</Link>

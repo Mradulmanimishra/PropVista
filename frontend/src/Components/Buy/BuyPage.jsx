@@ -154,7 +154,7 @@ const BuyPage = () => {
     return (
         <div className="BuyPageContainer">
             <header className="BuyHeader">
-                <Link to="/" className="BuyLogo">Banke Bihari Group</Link>
+                <Link to="/" className="BuyLogo">Professionalist</Link>
                 <div className="BuyHeaderNav">
                     <Link to="/">Home</Link>
                     <div onClick={handleSellClick} className="Sellbtn">Sell</div>

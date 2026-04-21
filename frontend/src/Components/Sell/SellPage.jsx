@@ -80,7 +80,7 @@ const SellPage = () => {
         <div className='SellPageDiv'>
             <div className="Sellnavbar">
                 <div className="Sellleft">
-                    <Link to="/" className='Selllogo'>Banke Bihari Group</Link>
+                    <Link to="/" className='Selllogo'>Professionalist</Link>
                 </div>
                 <div className="Sellright">
                     <nav>

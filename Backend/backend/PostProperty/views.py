@@ -12,10 +12,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 
-from .models import PropertyListing, FavouriteProperty, Inquiry, Review
+from .models import PropertyListing, FavouriteProperty, Inquiry, Review, PropertyImage
 from .serializers import (
     PropertyListingSerializer, FavouritePropertySerializer,
-    InquirySerializer, ReviewSerializer
+    InquirySerializer, ReviewSerializer, PropertyImageSerializer
 )
 
 
@@ -31,6 +31,13 @@ class PropertyListingCreateView(CreateAPIView):
     queryset = PropertyListing.objects.all()
     serializer_class = PropertyListingSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        listing = serializer.save()
+        # Handle multiple extra images
+        images = self.request.FILES.getlist('extra_images')
+        for i, img in enumerate(images):
+            PropertyImage.objects.create(property=listing, image=img, order=i)
 
 
 class PropertyListingListView(ListAPIView):
@@ -86,6 +93,14 @@ class PropertyDetailView(RetrieveAPIView):
     lookup_field = 'id'
     permission_classes = [AllowAny]
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # Increment view count
+        PropertyListing.objects.filter(pk=instance.pk).update(view_count=instance.view_count + 1)
+        instance.refresh_from_db()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
     def get_serializer_context(self):
         return {'request': self.request}
 
@@ -124,6 +139,40 @@ class UserListingDeleteView(DestroyAPIView):
 
     def get_queryset(self):
         return PropertyListing.objects.filter(seller_email=self.request.user.email)
+
+
+class UserListingUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, id):
+        try:
+            listing = PropertyListing.objects.get(id=id, seller_email=request.user.email)
+        except PropertyListing.DoesNotExist:
+            return Response({'error': 'Not found or not authorized.'}, status=404)
+
+        serializer = PropertyListingSerializer(listing, data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=400)
+        listing = serializer.save()
+
+        # Handle new extra images
+        new_images = request.FILES.getlist('extra_images')
+        for i, img in enumerate(new_images):
+            PropertyImage.objects.create(property=listing, image=img, order=listing.extra_images.count() + i)
+
+        return Response(PropertyListingSerializer(listing, context={'request': request}).data)
+
+
+class PropertyImageDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, image_id):
+        try:
+            img = PropertyImage.objects.get(id=image_id, property__seller_email=request.user.email)
+            img.delete()
+            return Response({'status': 'deleted'})
+        except PropertyImage.DoesNotExist:
+            return Response({'error': 'Not found.'}, status=404)
 
 
 # ── Favourites ────────────────────────────────────────────────────────────────

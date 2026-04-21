@@ -1,12 +1,16 @@
 from django.contrib import admin
-from .models import PropertyListing, FavouriteProperty, Inquiry, Review
+from .models import PropertyListing, FavouriteProperty, Inquiry, Review, PropertyImage
 
 @admin.register(PropertyListing)
 class PropertyListingAdmin(admin.ModelAdmin):
-    list_display = ('title', 'city', 'property_type', 'price', 'status', 'is_verified', 'seller_name', 'created_at')
+    list_display = ('title', 'city', 'property_type', 'price', 'status', 'is_verified', 'view_count', 'seller_name', 'created_at')
     search_fields = ('title', 'city', 'seller_name')
     list_filter = ('property_type', 'city', 'seller_type', 'status', 'is_verified')
     list_editable = ('status', 'is_verified')
+
+@admin.register(PropertyImage)
+class PropertyImageAdmin(admin.ModelAdmin):
+    list_display = ('property', 'order')
 
 @admin.register(FavouriteProperty)
 class FavouritePropertyAdmin(admin.ModelAdmin):

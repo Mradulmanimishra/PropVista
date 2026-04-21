@@ -24,7 +24,7 @@ const Home = () => {
             title: 'IN THE NATION',
         },
         {
-            subtitle: 'Banke Bihari Group',
+            subtitle: 'Professionalist',
             title: 'NOW #1 IN THE VRINDAVAN',
         },
         {
@@ -73,7 +73,7 @@ const Home = () => {
                     <div className="navbar">
                         <div className="left-part">
                             <div className='logo'>
-                                <Link to="/">Banke Bihari Group</Link>
+                                <Link to="/">Professionalist</Link>
                             </div>
                         </div>
                         <div className="right-part-desktop">

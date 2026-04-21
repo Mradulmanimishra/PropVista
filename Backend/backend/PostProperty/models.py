@@ -62,7 +62,6 @@ class PropertyListing(models.Model):
 
     # Step 4 (Media)
     images = models.ImageField(upload_to='property_images/', null=True, blank=True)
-    images = models.ImageField(upload_to='property_images/', null=True, blank=True)
 
     # Step 5
     seller_name = models.CharField(max_length=100)
@@ -80,6 +79,7 @@ class PropertyListing(models.Model):
 
     # Phase 3 additions
     is_verified = models.BooleanField(default=False)
+    view_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.title} - {self.city}"
@@ -118,6 +118,18 @@ class Inquiry(models.Model):
 
     def __str__(self):
         return f"Inquiry by {self.name} on {self.property.title}"
+
+
+class PropertyImage(models.Model):
+    property = models.ForeignKey(PropertyListing, on_delete=models.CASCADE, related_name='extra_images')
+    image = models.ImageField(upload_to='property_images/')
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"Image for {self.property.title}"
 
 
 RATING_CHOICES = [(i, i) for i in range(1, 6)]

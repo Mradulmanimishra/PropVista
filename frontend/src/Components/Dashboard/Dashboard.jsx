@@ -69,7 +69,7 @@ const Dashboard = () => {
     return (
         <div className="DashboardPage">
             <header className="DashboardHeader">
-                <Link to="/" className="DashLogo">Banke Bihari Group</Link>
+                <Link to="/" className="DashLogo">Professionalist</Link>
                 <nav>
                     <Link to="/buy">Browse</Link>
                     <Link to="/sell">+ Post Property</Link>

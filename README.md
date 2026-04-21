@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏠 Banke Bihari Group — Real Estate Platform
+# 🏠 PropVista — Real Estate Platform
 
 **Full-stack real estate platform for buying & selling properties in Vrindavan/Mathura, India.**  
 Built with Django REST Framework, React 19, JWT authentication, and Cloudinary storage.  

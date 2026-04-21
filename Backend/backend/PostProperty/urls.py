@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     PropertyListingCreateView, PropertyListingListView, PropertyDetailView,
-    SimilarPropertiesView, UserListingsView, UserListingDeleteView,
+    SimilarPropertiesView, UserListingsView, UserListingDeleteView, UserListingUpdateView,
+    PropertyImageDeleteView,
     ToggleFavouriteView, FavouriteListView,
     PropertyInquiryView, PropertyReviewView,
     AIChatView, PriceTrendView,
@@ -17,6 +18,10 @@ urlpatterns = [
     # User listings
     path('my-listings/', UserListingsView.as_view(), name='my-listings'),
     path('my-listings/<int:id>/delete/', UserListingDeleteView.as_view(), name='listing-delete'),
+    path('my-listings/<int:id>/update/', UserListingUpdateView.as_view(), name='listing-update'),
+
+    # Images
+    path('images/<int:image_id>/delete/', PropertyImageDeleteView.as_view(), name='image-delete'),
 
     # Favourites
     path('favourites/', FavouriteListView.as_view(), name='favourites-list'),
